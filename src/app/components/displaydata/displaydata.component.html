@@ -2,9 +2,9 @@
 <div style="width: auto; text-align: center;">
   <table>
     <tr>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Amount</th>
+      <th (click)="sortData('name')" >Name</th>
+      <th (click)="sortData('category')">Category</th>
+      <th (click)="sortData('amount')">Amount</th>
     </tr>
     <tr *ngFor="let data of dataFromServer">
       <td>{{data.name}}</td>
