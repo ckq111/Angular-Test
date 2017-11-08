@@ -8,7 +8,6 @@ import { DatafetchserviceService } from '../../datafetchservice.service';
 export class DisplaydataComponent implements OnInit {
 
   dataFromServer = []; // Data received from json will be stored here.
-  processedArray = []; // After receiving we can update
   sortCol = '';
   static sortDir: number;
   constructor(public dataFetchService : DatafetchserviceService ) { }
@@ -25,7 +24,7 @@ export class DisplaydataComponent implements OnInit {
   sortData =(col: string)=>{
     if(this.sortCol === col) DisplaydataComponent.sortDir = DisplaydataComponent.sortDir * -1;
     this.sortCol = col;
-    this.dataFromServer.sort(function(a,b) {
+    this.dataFromServer.sort((a,b)=> {
       if (a[col] > b[col]) return 1 * DisplaydataComponent.sortDir;
       if (a[col] < b[col]) return -1 * DisplaydataComponent.sortDir;
       return 0;
