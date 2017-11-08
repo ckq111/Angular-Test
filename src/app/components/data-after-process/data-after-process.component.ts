@@ -8,39 +8,43 @@ import { DatafetchserviceService } from '../../datafetchservice.service';
 })
 export class DataAfterProcessComponent implements OnInit {
   dataFromServer = []; // Data received from json will be stored here.
-  processedArray = []; // After receiving we can update
+  processedArray = []; // To store processed data
   constructor(public dataFetchService : DatafetchserviceService ) { }
 
   ngOnInit() {
+    // On component init fetching data from data.json using service
     this.dataFetchService.getData()
       .subscribe(data => {
-        this.dataFromServer = data
-        this.testProcessData();
+        this.dataFromServer = data;
+        this.processInputData();
       });
   }
-  testProcessData(){
+  // generate object that perfectly maps to UI requirement
+  processInputData(){
+    // From input array this will create array of unique 'names'
     let uniqueNames = [];
     this.dataFromServer.forEach((nextObj)=>{
       if(!uniqueNames.includes(nextObj.name))
         uniqueNames.push(nextObj.name);
     });
+    // Now we will sort it to fulfill requirement
     uniqueNames.sort((a,b)=>{
       if(a>b) return 1;
       if(a<b) return -1;
       else return 0;
     });
+
+    // Lastly forEach operation on unique name
+    // values to fetch relevant category and amount from data fetched from server
+    // and create separate object for each name property.
     uniqueNames.forEach((nextName)=>{
       let retObj = {name: nextName};
       this.dataFromServer.forEach((nextObj)=> {
-        if(nextObj.category === 'C1' && nextObj.name === nextName)
-          retObj['C1'] = nextObj.amount;
-        if(nextObj.category === 'C2' && nextObj.name === nextName)
-          retObj['C2'] = nextObj.amount;
-        if(nextObj.category === 'C3' && nextObj.name === nextName)
-          retObj['C3'] = nextObj.amount;
+        if(nextObj.name === nextName)
+          retObj[nextObj.category] = nextObj.amount;
       });
 
-      console.log(retObj);
+      // Push new object for each unique name value
       this.processedArray.push(retObj);
     });
   }
