@@ -1,9 +1,3 @@
-.flex-container{
-  display: flex;
-}
-.flex-container div{
-  width: 325px;
-}
 table{
   width: 400px;
 }
