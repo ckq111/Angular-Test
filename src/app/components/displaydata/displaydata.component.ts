@@ -7,11 +7,12 @@ import { DatafetchserviceService } from '../../datafetchservice.service';
 })
 export class DisplaydataComponent implements OnInit {
 
+  dataFromServer = [];
   constructor(public dataFetchService : DatafetchserviceService ) { }
 
   ngOnInit() {
     this.dataFetchService.getData()
-      .subscribe(data =>console.log(data));
+      .subscribe(data => this.dataFromServer = data);
   }
 
 }
